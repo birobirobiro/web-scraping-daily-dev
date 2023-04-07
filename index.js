@@ -6,7 +6,9 @@ const app = express();
 app.get('/', async (req, res) => {
   try {
     const browser = await puppeteer.launch({
-      args: ['--no-sandbox', '--disable-setuid-sandbox'], // Add '--no-sandbox' and '--disable-setuid-sandbox' options for running in Railway
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
+      executablePath: process.env.PUPPETEER_EXECUTABLE_PATH, // Set the executable path for Puppeteer
+      headless: true, // Set headless mode to true for running in headless environment
     });
     const page = await browser.newPage();
     await page.goto('https://app.daily.dev/popular');
