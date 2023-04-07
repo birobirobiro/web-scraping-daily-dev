@@ -5,7 +5,9 @@ const app = express();
 
 app.get('/', async (req, res) => {
   try {
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({
+      args: ['--no-sandbox', '--disable-setuid-sandbox'], // Add '--no-sandbox' and '--disable-setuid-sandbox' options for running in Railway
+    });
     const page = await browser.newPage();
     await page.goto('https://app.daily.dev/popular');
     await page.waitForSelector('.Card_title__6axF8');
@@ -33,5 +35,5 @@ app.get('/', async (req, res) => {
   }
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => console.log(`Server listening on port ${PORT}...`));
